@@ -1,36 +1,39 @@
-"use client"
+"use client";
 
-import { ReactNode, ReactPortal } from "react"
-import { createPortal } from "react-dom"
-import clsx from "clsx"
+import clsx from "clsx";
+import { ReactNode, ReactPortal } from "react";
+import { createPortal } from "react-dom";
 
 export interface PortalProps {
-  children: ReactNode
-  isSidedrawer?: boolean
-  className?: string
-  closePortal?: () => void
+  children: ReactNode;
+  isSidedrawer?: boolean;
+  className?: string;
+  closePortal?: () => void;
 }
 
 export default function Portal({
   children,
   className = "",
   isSidedrawer = false,
-  closePortal,
 }: PortalProps): ReactPortal {
   const portalRoot = document.getElementById(`portal`) as
     | Element
-    | DocumentFragment
+    | DocumentFragment;
 
   const portal = (
     <div
-      className={clsx(`fixed top-0 flex justify-center items-center z-50`, {
-        "right-0 w-full h-full max-w-[730px]": isSidedrawer,
-        "left-0 w-full h-full": !isSidedrawer,
-      })}
+      className={clsx(
+        `fixed top-0 z-50 flex items-center justify-center`,
+        {
+          "right-0 h-full w-full max-w-[730px]": isSidedrawer,
+          "left-0 h-full w-full": !isSidedrawer,
+        },
+        className,
+      )}
     >
       {children}
     </div>
-  )
+  );
 
-  return createPortal(portal, portalRoot)
+  return createPortal(portal, portalRoot);
 }

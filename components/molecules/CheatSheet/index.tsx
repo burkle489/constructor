@@ -13,8 +13,8 @@ import Image from "next/image";
 
 const CheatSheet: FC<ICheatSheetResponse> = (cheatSheet) => {
   const sheetRef = useRef(null);
-  const { name, content, image, imageUrl, imageDimensions } = cheatSheet;
-  console.log({ image });
+  const { name, content, imageUrl, imageDimensions } = cheatSheet;
+
   const dispatch = useAppDispatch();
 
   const [minimised, setMinimised] = useState(false);

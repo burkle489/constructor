@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { OpenAI } from "openai";
 
 const openai = new OpenAI({
@@ -37,9 +37,6 @@ export async function GET() {
       return NextResponse.json({ error: "No content" }, { status: 500 });
     }
   } catch (error) {
-    return NextResponse.json(
-      { error: (error as any).message },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: error }, { status: 500 });
   }
 }
