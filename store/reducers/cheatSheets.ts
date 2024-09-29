@@ -5,7 +5,8 @@ export interface ICheatSheetResponse {
   _id: string;
   name: string;
   content: any;
-  image: any;
+  imageUrl: string;
+  imageDimensions: { aspectRatio: number; height: number; width: number };
   _createdAt: string;
   _updatedAt: string;
 }

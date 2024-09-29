@@ -6,19 +6,26 @@ import {
   ICheatSheetResponse,
 } from "@/store/reducers/cheatSheets";
 import clsx from "clsx";
-import { FC, useState } from "react";
+import { FC, useRef, useState } from "react";
 import Draggable from "react-draggable";
+import { PortableText } from "@portabletext/react";
+import Image from "next/image";
 
 const CheatSheet: FC<ICheatSheetResponse> = (cheatSheet) => {
-  const { name } = cheatSheet;
+  const sheetRef = useRef(null);
+  const { name, content, image, imageUrl, imageDimensions } = cheatSheet;
+  console.log({ image });
   const dispatch = useAppDispatch();
 
   const [minimised, setMinimised] = useState(false);
   return (
-    <Draggable>
-      <div className="absolute left-4 top-4 border-4 border-grey-dark bg-white">
+    <Draggable nodeRef={sheetRef}>
+      <div
+        ref={sheetRef}
+        className="absolute left-4 top-4 z-[9999] cursor-grab border-4 border-grey-dark bg-white"
+      >
         <div className="flex w-full items-center justify-between gap-4 p-1 px-2">
-          <p className="text-md mb-0 font-bold uppercase text-grey-dark">
+          <p className="text-md pointer-events-none mb-0 font-bold uppercase text-grey-dark">
             {name}
           </p>
           <div className="flex gap-1">
@@ -43,10 +50,17 @@ const CheatSheet: FC<ICheatSheetResponse> = (cheatSheet) => {
           </div>
         </div>
         {minimised ? null : (
-          <div className="p-4 pt-2">
-            <p className="text-3xl font-bold uppercase text-grey-dark">
-              {name}
-            </p>
+          <div className="p-4 pt-2 text-grey-dark">
+            {content ? <PortableText value={content} /> : null}
+            {imageUrl ? (
+              <Image
+                src={imageUrl}
+                width={imageDimensions.width}
+                height={imageDimensions.height}
+                alt="alt"
+                className={`pointer-events-none h-auto w-auto aspect-[${imageDimensions.aspectRatio}]`}
+              />
+            ) : null}
           </div>
         )}
       </div>
