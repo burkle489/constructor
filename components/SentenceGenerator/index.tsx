@@ -1,17 +1,18 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import GenerateSentencesButton from "../GenerateSentencesButton"
+import { useState } from "react";
+import GenerateSentencesButton from "../molecules/GenerateSentencesButton";
+import Button from "../atoms/Button";
 
 const SentenceGenerator = () => {
   const [sentences, setSentences] = useState<{
-    sentences: { english: string; spanish: string }[]
-  } | null>(null)
-  const [showAnswers, setShowAnswers] = useState<boolean>(false)
+    sentences: { english: string; spanish: string }[];
+  } | null>(null);
+  const [showAnswers, setShowAnswers] = useState<boolean>(false);
 
   return (
-    <div className="bg-white mt-12 p-6 rounded-lg flex flex-col gap-6">
-      <div className="w-full flex justify-center">
+    <div className="mt-12 flex flex-col gap-6 border-4 border-grey-dark p-6">
+      <div className="flex w-full justify-center">
         <GenerateSentencesButton {...{ setSentences }} />
       </div>
 
@@ -22,40 +23,39 @@ const SentenceGenerator = () => {
               return (
                 <div
                   key={index}
-                  className="flex gap-6 items-center justify-start"
+                  className="flex items-center justify-start gap-6"
                 >
-                  <p className="flex-1 text-right whitespace-nowrap text-blue-light font-bold text-2xl w-[250px]">
+                  <p className="w-[250px] flex-1 whitespace-nowrap text-right text-2xl font-bold text-grey-dark">
                     {sentence.english}
                   </p>
                   <input
                     type="text"
-                    className="flex-1 px-2 py-1 text-blue-dark text-2xl  border border-blue-dark rounded"
+                    className="flex-1 border-2 border-grey-light px-2 py-1 text-2xl text-grey-dark"
                   />
                   <div className="flex-1">
                     {showAnswers && (
-                      <p className="whitespace-nowrap text-green-500 font-bold text-2xl w-[250px]">
+                      <p className="w-[250px] whitespace-nowrap text-2xl font-bold text-emerald-green">
                         {sentence.spanish}
                       </p>
                     )}
                   </div>
                 </div>
-              )
+              );
             })}
           </div>
         </div>
       )}
-      <div className="w-full flex justify-center mt-6">
-        <button
-          className=" px-3 py-2 rounded uppercase font-bold text-white bg-blue-light"
+      <div className="mt-6 flex w-full justify-center">
+        <Button
           onClick={() => {
-            setShowAnswers(true)
+            setShowAnswers(true);
           }}
         >
           Check Answers
-        </button>
+        </Button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SentenceGenerator
+export default SentenceGenerator;
